@@ -1,0 +1,32 @@
+안녕하세요<br>
+<a href="{% url 'move' %}">move</a>
+<a href="{% url 'sign_up' %}">회원가입</a>
+{% if user.is activate %}
+{{request.user}}
+<a href="{% url 'logout%}'"
+{% else %}
+
+{% endif %}
+
+<form method="POST" action="{% url 'add' %}">
+    {% csrf_token %}
+    <input type="text" placeholder="제목" name="title">
+    <input type="text" placeholder="글쓴이" name="writer">
+    <input type="text" placeholder="내용" name="content">
+    <button type="submit">글쓰기</button>
+</form>
+{% for post in posts %}
+<div>
+        <h1>{{post.pk}}:{{post.title}}</h1>
+        <h2>{{post.writer}}</h2>
+        <h2>{{post.content}}</h2>
+        <a href="{% url 'delete' pk=post.pk %}">삭제</a>
+        <form method="POST" action="{% url 'edit' pk=post.pk %}">
+            {% csrf_token %}
+            <input type="text" placeholder="제목" name="title">
+            <input type="text" placeholder="글쓴이" name="writer">
+            <input type="text" placeholder="내용" name="content">
+            <button type="submit">수정하기</button>
+        </form>
+</div>
+{% endfor %}
